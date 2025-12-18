@@ -5,12 +5,7 @@ from folium.plugins import Draw
 from streamlit_folium import st_folium
 from datetime import date
 
-try:
-    ee.Initialize()
-except:
-    ee.Authenticate()
-    ee.Initialize()
-
+ee.Initialize(project='mini1-478517')
 
 st.set_page_config(
     page_title="AgroOrbit – Crop Monitoring",
@@ -20,14 +15,14 @@ st.set_page_config(
 
 st.markdown(
     """
-    # 🌿 **AgroOrbit**
+    # 🌿 *AgroOrbit*
     ### Smart Crop Monitoring using NDVI
     """
 )
 st.caption("Remote Sensing • Sentinel-2 • Google Earth Engine")
 st.markdown("---")
 
-st.sidebar.markdown("## ⚙️ Control Panel")
+st.sidebar.markdown("## ⚙ Control Panel")
 
 start_date = st.sidebar.date_input(
     "📅 Start Date",
@@ -45,7 +40,7 @@ if start_date >= end_date:
 
 with st.expander("📘 About AgroOrbit"):
     st.write("""
-    **AgroOrbit** is a web-based crop monitoring platform that allows users to
+    *AgroOrbit* is a web-based crop monitoring platform that allows users to
     select an area on the map and analyze crop health using NDVI.
     Sentinel-2 harmonized satellite imagery is processed using Google Earth Engine.
     """)
@@ -53,7 +48,7 @@ with st.expander("📘 About AgroOrbit"):
 col1, col2 = st.columns([2, 1])
 
 with col1:
-    st.markdown("### 🗺️ Select Area for NDVI Calculation")
+    st.markdown("### 🗺 Select Area for NDVI Calculation")
 
     m = folium.Map(
         location=[10.8, 78.5],
@@ -81,7 +76,7 @@ if (
     or map_data["all_drawings"] is None
     or len(map_data["all_drawings"]) == 0
 ):
-    st.info("🖊️ Please draw a polygon or rectangle on the map to calculate NDVI.")
+    st.info("🖊 Please draw a polygon or rectangle on the map to calculate NDVI.")
     st.stop()
 
 geometry = map_data["all_drawings"][0]["geometry"]
@@ -127,10 +122,10 @@ with col2:
         st.warning("NDVI value could not be calculated.")
 
     st.markdown("""
-    **NDVI Interpretation**
-    - **> 0.6** → Healthy crops  
-    - **0.3 – 0.6** → Moderate growth  
-    - **< 0.3** → Poor vegetation
+    *NDVI Interpretation*
+    - *> 0.6* → Healthy crops  
+    - *0.3 – 0.6* → Moderate growth  
+    - *< 0.3* → Poor vegetation
     """)
 
 st.markdown("---")
